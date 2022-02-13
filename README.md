@@ -19,4 +19,5 @@
 |Image Segmentation|[인물 사진 모드 만들기](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp07_%EC%9D%B8%EB%AC%BC%EC%82%AC%EC%A7%84.ipynb)|
 |Text Summarization|[뉴스 요약봇](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp08_%EB%89%B4%EC%8A%A4%EC%9A%94%EC%95%BD%EB%B4%87.ipynb)|
 |Image Classification|[폐렴 진단하기](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp09_%ED%8F%90%EB%A0%B4%20%EC%A7%84%EB%8B%A8.ipynb)|
+|Image creation|[cifar10 활용해 새로운 이미지 생성](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp10_cifar%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%83%9D%EC%84%B1.ipynb)
 |Time Series|[주식 변동 예측하기](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp11_%EC%A3%BC%EC%8B%9D%20%EB%B3%80%EB%8F%99%20%EC%98%88%EC%B8%A1.ipynb)
