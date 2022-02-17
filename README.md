@@ -22,3 +22,4 @@
 |10|Image Generation|[cifar10 활용해 새로운 이미지 생성](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp10_cifar%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EC%83%9D%EC%84%B1.ipynb)
 |11|Time Series|[주식 변동 예측하기](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp11_%EC%A3%BC%EC%8B%9D%20%EB%B3%80%EB%8F%99%20%EC%98%88%EC%B8%A1.ipynb)
 |12|Text Generation|[한국어 챗봇](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp12_%ED%95%9C%EA%B5%AD%EC%96%B4%20%EC%B1%97%EB%B4%87.ipynb)|
+|13|BERT|[퀴즈푸는 인공지능](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp13_%ED%80%B4%EC%A6%88%ED%91%B8%EB%8A%94%20%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5.ipynb)|
