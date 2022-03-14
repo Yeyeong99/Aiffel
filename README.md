@@ -25,3 +25,4 @@
 |13|BERT|[퀴즈푸는 인공지능](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp13_%ED%80%B4%EC%A6%88%ED%91%B8%EB%8A%94%20%EC%9D%B8%EA%B3%B5%EC%A7%80%EB%8A%A5.ipynb)|
 |14|Recommendation|[영화 추천](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp14_%EC%98%81%ED%99%94%20%EC%B6%94%EC%B2%9C.ipynb)|
 |15|OCR|[OCR 모델 성능 비교](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp15_OCR%20%EB%AA%A8%EB%8D%B8%20%EC%84%B1%EB%8A%A5%20%EB%B9%84%EA%B5%90.ipynb)
+|16|Reccomentation|[영화 추천](https://github.com/Yeyeong99/Aiffel/blob/main/%EB%94%A5%EB%9F%AC%EB%8B%9D%20%EC%8B%A4%EC%8A%B5/exp16_%EC%98%81%ED%99%94%EC%98%88%EC%B8%A1.ipynb)|
