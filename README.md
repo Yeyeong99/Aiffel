@@ -31,4 +31,5 @@
 ## Going Deeper
 |order|content|project|
 |:-:|:---:|:---:|
-|1|Classification|[뉴스 카테고리 다중분류]()
+|1|Tokenizer|[SentencePiece를 이용한 감성분석](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd02_SentencePiece.ipynb)|
+|2|Classification|[뉴스 카테고리 다중분류](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd04_%EB%89%B4%EC%8A%A4%20%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%20%EB%8B%A4%EC%A4%91%EB%B6%84%EB%A5%98.ipynb)|
