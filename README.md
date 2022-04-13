@@ -35,3 +35,5 @@
 |2|Classification|[뉴스 카테고리 다중분류](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd04_%EB%89%B4%EC%8A%A4%20%EC%B9%B4%ED%85%8C%EA%B3%A0%EB%A6%AC%20%EB%8B%A4%EC%A4%91%EB%B6%84%EB%A5%98.ipynb)|
 |3|Embedding Bias|[임베딩 내 편향성 판단](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd06%EC%9E%84%EB%B2%A0%EB%94%A9_%EB%82%B4_%ED%8E%B8%ED%96%A5%EC%84%B1.ipynb)|
 |4|Translation|[번역기 모델](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd08_%EB%B2%88%EC%97%AD%EA%B8%B0_%EC%83%9D%EC%84%B1.ipynb)|
+|5|Translation|[트랜스포머 번역기](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd10_transformer_%EB%B2%88%EC%97%AD%EA%B8%B0.ipynb)|
+|6|Chat Bot|[트랜스포머 챗봇](https://github.com/Yeyeong99/Aiffel/blob/main/Going%20Deeper/Gd12_%EB%B2%88%EC%97%AD_%EB%AA%A8%EB%8D%B8%EC%9D%84_%ED%99%9C%EC%9A%A9%ED%95%9C_%EC%B1%97%EB%B4%87_%EC%A0%9C%EC%9E%91.ipynb)|
