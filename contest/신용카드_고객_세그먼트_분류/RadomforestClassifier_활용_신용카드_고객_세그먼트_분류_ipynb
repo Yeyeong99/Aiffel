@@ -1,0 +1,449 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Yeyeong99/Aiffel/blob/main/contest/%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EA%B3%A0%EA%B0%9D_%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8_%EB%B6%84%EB%A5%98/RadomforestClassifier_%ED%99%9C%EC%9A%A9_%EC%8B%A0%EC%9A%A9%EC%B9%B4%EB%93%9C_%EA%B3%A0%EA%B0%9D_%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8_%EB%B6%84%EB%A5%98_ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "7iEoXiGPcCrE"
+      },
+      "source": [
+        "### Import"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "ZCTTNMKqcCrF"
+      },
+      "outputs": [],
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "import gc\n",
+        "\n",
+        "from sklearn.preprocessing import LabelEncoder"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "YQUicBRXcCrF"
+      },
+      "source": [
+        "### Data Load"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from google.colab import drive\n",
+        "drive.mount('/content/drive')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "6y3NF58ocZD5",
+        "outputId": "f5a3dd55-4f3d-4952-a008-2448574178bb"
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Mounted at /content/drive\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "train_df = pd.read_csv(\"/content/drive/MyDrive/train_data.csv\")\n",
+        "test_df = pd.read_csv(\"/content/drive/MyDrive/test_data.csv\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "n3SVuajLp6Fg",
+        "outputId": "5bf84553-f6a6-4f0d-8d93-5508f0a9e94e"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "<ipython-input-3-9b25485309a6>:1: DtypeWarning: Columns (299,384) have mixed types. Specify dtype option on import or set low_memory=False.\n",
+            "  train_df = pd.read_csv(\"/content/drive/MyDrive/train_data.csv\")\n",
+            "<ipython-input-3-9b25485309a6>:2: DtypeWarning: Columns (298) have mixed types. Specify dtype option on import or set low_memory=False.\n",
+            "  test_df = pd.read_csv(\"/content/drive/MyDrive/test_data.csv\")\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "DAr30RwecCrH"
+      },
+      "source": [
+        "### Data Preprocessing(2) : Encoding"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "id": "8FPStL9acCrI"
+      },
+      "outputs": [],
+      "source": [
+        "feature_cols = [col for col in train_df.columns if col not in [\"ID\", \"Segment\"]]\n",
+        "\n",
+        "X = train_df[feature_cols].copy()\n",
+        "y = train_df[\"Segment\"].copy()\n",
+        "\n",
+        "# 타깃 라벨 인코딩\n",
+        "le_target = LabelEncoder()\n",
+        "y_encoded = le_target.fit_transform(y)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "id": "PSbzbQ_hcCrI"
+      },
+      "outputs": [],
+      "source": [
+        "categorical_features = X.select_dtypes(include=['object']).columns.tolist()\n",
+        "\n",
+        "X_test = test_df.copy()\n",
+        "\n",
+        "encoders = {}  # 각 컬럼별 encoder 저장\n",
+        "\n",
+        "for col in categorical_features:\n",
+        "    # Convert the column to string type before applying LabelEncoder\n",
+        "    X[col] = X[col].astype(str)\n",
+        "    X_test[col] = X_test[col].astype(str)\n",
+        "\n",
+        "    le_train = LabelEncoder()\n",
+        "    X[col] = le_train.fit_transform(X[col])\n",
+        "    encoders[col] = le_train\n",
+        "    unseen_labels_val = set(X_test[col]) - set(le_train.classes_)\n",
+        "    if unseen_labels_val:\n",
+        "        le_train.classes_ = np.append(le_train.classes_, list(unseen_labels_val))\n",
+        "    X_test[col] = le_train.transform(X_test[col])"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 7,
+      "metadata": {
+        "id": "5vJT5ltQcCrI",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "c2368fbc-4bd6-4c2e-cac2-ff9dfb7acdd0"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "15"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 7
+        }
+      ],
+      "source": [
+        "gc.collect()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Train / Validation Split"
+      ],
+      "metadata": {
+        "id": "rgZAQ_shxAqJ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from sklearn.model_selection import train_test_split"
+      ],
+      "metadata": {
+        "id": "z49wtF3pxI2T"
+      },
+      "execution_count": 8,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "X_train, X_val, y_train, y_val = train_test_split(\n",
+        "    X,\n",
+        "    y_encoded,\n",
+        "    test_size=0.2,\n",
+        "    random_state=42\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "Z_S-Vn4WxFL1"
+      },
+      "execution_count": 9,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "GrylvcYNcCrI"
+      },
+      "source": [
+        "### Train"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Ni9kH9uIcCrJ"
+      },
+      "source": [
+        "### Predict"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "uSPpB55QcCrJ"
+      },
+      "source": [
+        "### Submission"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 11,
+      "metadata": {
+        "id": "PZ-CzWwycCrJ"
+      },
+      "outputs": [],
+      "source": [
+        "from sklearn.ensemble import RandomForestClassifier\n",
+        "from sklearn.model_selection import GridSearchCV"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "param_grid = {\n",
+        "    'n_estimators': [50, 100, 200],  # 트리 개수\n",
+        "    'max_depth': [None, 10, 20],     # 최대 깊이\n",
+        "    'min_samples_split': [2, 5, 10], # 노드 분할 최소 샘플 수\n",
+        "    'min_samples_leaf': [1, 2, 4],   # 리프 노드 최소 샘플 수\n",
+        "    'bootstrap': [True, False]       # 부트스트래핑 여부\n",
+        "}"
+      ],
+      "metadata": {
+        "id": "-EyIDmSGeVFn"
+      },
+      "execution_count": 12,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "rf_model = RandomForestClassifier(\n",
+        "    n_estimators=50,\n",
+        "    max_depth=10,\n",
+        "    n_jobs=-1,\n",
+        "    max_features=\"sqrt\",\n",
+        "    random_state=42,\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "Vq0Qo4izYUvk"
+      },
+      "execution_count": 13,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# GridSearchCV 적용\n",
+        "grid_search = GridSearchCV(\n",
+        "    estimator=rf_model,\n",
+        "    param_grid=param_grid,\n",
+        "    cv=5,         # 5-Fold 교차 검증\n",
+        "    n_jobs=-1,    # 모든 CPU 코어 사용\n",
+        "    verbose=2,    # 진행 과정 출력\n",
+        "    scoring='accuracy'  # 평가 기준\n",
+        ")"
+      ],
+      "metadata": {
+        "id": "rirZnErheX5e"
+      },
+      "execution_count": 14,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### 모델 저장하기, 학습 중 메시지 확인"
+      ],
+      "metadata": {
+        "id": "doqzRDMCVhvK"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "grid_search.fit(X_train, y_train)"
+      ],
+      "metadata": {
+        "id": "jbSNq7mCYka-",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "02fab55b-d87a-46f1-a436-ba2749d2b446"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Fitting 5 folds for each of 162 candidates, totalling 810 fits\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(\"Best parameters:\", grid_search.best_params_)"
+      ],
+      "metadata": {
+        "id": "w9rvmst9e1yS"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "best_rf = grid_search.best_estimator_"
+      ],
+      "metadata": {
+        "id": "Q9rVTJDWe2hJ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "I3LLU0K8cCrJ"
+      },
+      "outputs": [],
+      "source": [
+        "X_test.drop(columns=['ID'],inplace=True)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "y_test_pred_rf = best_rf.predict(X_test)\n",
+        "y_test_pred_rf_labels = le_target.inverse_transform(y_test_pred_rf)\n"
+      ],
+      "metadata": {
+        "id": "Ms82vJ0IZT6M"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "test_data_rf = test_df.copy()  # 원본 유지"
+      ],
+      "metadata": {
+        "id": "WJqtUauWZe7_"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "test_data_rf[\"pred_label\"] = y_test_pred_rf_labels"
+      ],
+      "metadata": {
+        "id": "oE0iJ-8uZiwy"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "submission = test_data_rf.groupby(\"ID\")[\"pred_label\"] \\\n",
+        "    .agg(lambda x: x.value_counts().idxmax()) \\\n",
+        "    .reset_index()\n",
+        "\n",
+        "submission.columns = [\"ID\", \"Segment\"]\n",
+        "\n",
+        "submission.to_csv('/content/drive/MyDrive/creditcard_randomforest_gridsearch.csv',index=False)"
+      ],
+      "metadata": {
+        "id": "69MgCFR0cznx"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8.13"
+    },
+    "colab": {
+      "provenance": [],
+      "gpuType": "V28",
+      "include_colab_link": true
+    },
+    "accelerator": "TPU"
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
